@@ -1,7 +1,7 @@
 {
   "name": "Tithe Calculator",
   "short_name": "Tithe Calculator",
-  "start_url": "/tithe-tester/",
+  "start_url": "/Tithe-tester/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#000000",
