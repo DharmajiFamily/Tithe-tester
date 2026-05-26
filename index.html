@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="manifest" href="manifest.json">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tithe Calculator</title>
@@ -150,6 +151,12 @@ function calculate() {
     document.getElementById('results').style.display = 'block';
 }
 </script>
-
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js')
+      .then(() => console.log('App ready to install!'))
+      .catch((err) => console.log('Error', err));
+  }
+</script>
 </body>
 </html>
