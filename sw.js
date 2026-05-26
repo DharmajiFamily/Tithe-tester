@@ -1,7 +1,7 @@
 const CACHE_NAME = 'tithe-cache-v1';
 const ASSETS = [
-  '/tithe-tester/',
-  '/tithe-tester/index.html'
+  '/Tithe-tester/',
+  '/Tithe-tester/index.html'
 ];
 
 self.addEventListener('install', (e) => {
