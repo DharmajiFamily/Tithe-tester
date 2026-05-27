@@ -171,3 +171,140 @@ function calculate() {
 
 </body>
 </html>
+            padding: 12px; 
+            margin-top: 8px; 
+            border: 1px solid #dddfe2; 
+            border-radius: 6px; 
+            box-sizing: border-box; 
+            font-size: 18px; 
+        }
+
+        /* Container to put text on left and checkbox on right */
+        .checkbox-row { 
+            margin-top: 20px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            background: #f7f8fa;
+            padding: 10px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        .checkbox-row input { 
+            width: 20px; 
+            height: 20px; 
+            cursor: pointer;
+        }
+
+        button { 
+            width: 100%; 
+            padding: 14px; 
+            background-color: #1877f2; 
+            color: white; 
+            border: none; 
+            border-radius: 6px; 
+            margin-top: 25px; 
+            cursor: pointer; 
+            font-size: 16px; 
+            font-weight: bold;
+        }
+        button:hover { background-color: #166fe5; }
+
+        #results { 
+            margin-top: 20px; 
+            padding: 15px; 
+            background: #e7f3ff; 
+            border-radius: 8px; 
+            display: none; 
+        }
+        .result-line { 
+            display: flex; 
+            justify-content: space-between; 
+            margin-bottom: 8px; 
+            padding-bottom: 5px; 
+            border-bottom: 1px solid #d8e6f2;
+        }
+        .final-amount { 
+            font-weight: bold; 
+            color: #00a400; 
+            font-size: 1.2em; 
+            margin-top: 10px; 
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h2>Tithe Calculator</h2>
+    
+    <label for="amount">Total Amount Received</label>
+    <input type="number" id="amount" placeholder="0.00" step="0.01">
+
+    <label class="checkbox-row" for="thirdTithe">
+        <span>Include Third Tithe/Savings?</span>
+        <input type="checkbox" id="thirdTithe">
+    </label>
+
+    <button onclick="calculate()">Calculate</button>
+
+    <div id="results">
+        <div class="result-line"><span>First Tithe (10%):</span> <span id="r1"></span></div>
+        <div class="result-line"><span>Second Tithe (10%):</span> <span id="r2"></span></div>
+        <div id="thirdRow" class="result-line" style="display:none;"><span>Third Tithe (10%):</span> <span id="r3"></span></div>
+        <div class="final-amount">You Keep: <span id="rf"></span></div>
+    </div>
+</div>
+
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('sw.js')
+        .then(reg => console.log('Service Worker registered successfully.', reg))
+        .catch(err => console.log('Service Worker registration failed:', err));
+    });
+  }
+</script>
+
+<script>
+function calculate() {
+    // Get the input value
+    let val = document.getElementById('amount').value;
+    let amount = parseFloat(val);
+
+    if (isNaN(amount) || amount <= 0) {
+        alert("Please enter a valid amount.");
+        return;
+    }
+
+    // Calculation Logic
+    let t1 = amount * 0.10;
+    let balance = amount - t1;
+
+    let t2 = balance * 0.10;
+    balance -= t2;
+
+    let showThird = document.getElementById('thirdTithe').checked;
+    let t3 = 0;
+    
+    if (showThird) {
+        t3 = balance * 0.10;
+        balance -= t3;
+        document.getElementById('thirdRow').style.display = 'flex';
+    } else {
+        document.getElementById('thirdRow').style.display = 'none';
+    }
+
+    // Updating the Screen
+    document.getElementById('r1').innerText = "$" + t1.toFixed(2);
+    document.getElementById('r2').innerText = "$" + t2.toFixed(2);
+    document.getElementById('r3').innerText = "$" + t3.toFixed(2);
+    document.getElementById('rf').innerText = "$" + balance.toFixed(2);
+    
+    // Show the results box
+    document.getElementById('results').style.display = 'block';
+}
+</script>
+
+</body>
+</html>
