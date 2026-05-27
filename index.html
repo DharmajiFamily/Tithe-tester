@@ -1,39 +1,326 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="icon" type="image/png" href="1779836886275.png">
+    <link rel="apple-touch-icon" href="1779836886275.png">
     <link rel="manifest" href="manifest.json">
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tithe Calculator</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#2d0b5a">
+    <meta name="apple-mobile-web-app-title" content="Tithe Calc">
+
+    <title>Tithe Calculator | House of Judah</title>
     <style>
-        /* This makes it look like a modern mobile app */
         body { 
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
+            font-family: 'Segoe UI', Arial, sans-serif; 
+            margin: 0; 
+            background: #2d0b5a; 
+            color: white; 
             display: flex; 
-            justify-content: center; 
-            padding: 20px; 
-            background-color: #f0f2f5; 
+            flex-direction: column; 
+            min-height: 100vh; 
+            text-align: center;
         }
-        .card { 
-            background: white; 
-            padding: 25px; 
-            border-radius: 15px; 
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1); 
-            width: 100%; 
-            max-width: 400px; 
+        nav { 
+            background: #2d0b5a; 
+            padding: 1.5rem 5%; 
+            border-bottom: 3px solid #d4af37;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
-        h2 { color: #1c1e21; text-align: center; margin-top: 0; }
-        label { display: block; margin-top: 20px; font-weight: 600; color: #4b4f56; }
+        .logo-text { 
+            color: #d4af37; 
+            font-weight: bold; 
+            letter-spacing: 2px; 
+            font-size: 1.5rem; 
+            text-transform: uppercase;
+            text-decoration: none;
+        }
+        .container { 
+            flex: 1; 
+            padding: 40px 20px; 
+            max-width: 550px; 
+            margin: auto; 
+            width: 100%;
+            box-sizing: border-box;
+        }
+        h1 { color: #d4af37; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 1px; }
         
-        input[type="number"] { 
-            width: 100%; 
-            padding: 12px; 
-            margin-top: 8px; 
-            border: 1px solid #dddfe2; 
-            border-radius: 6px; 
-            box-sizing: border-box; 
-            font-size: 18px; 
+        .calculator-card { 
+            background: rgba(255, 255, 255, 0.08); 
+            padding: 30px; 
+            border-radius: 15px; 
+            border: 1px solid rgba(212, 175, 55, 0.3); 
+            margin-bottom: 25px;
+            text-align: left;
         }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #fff;
+        }
+        
+        .calc-input {
+            width: 100%;
+            padding: 12px; 
+            border-radius: 6px; 
+            border: 1px solid rgba(212, 175, 55, 0.5); 
+            background: #ffffff; 
+            color: #000000; 
+            font-size: 1.1rem;
+            outline: none;
+            box-sizing: border-box;
+        }
+        .calc-input:focus {
+            border-color: #d4af37;
+            box-shadow: 0 0 5px rgba(212, 175, 55, 0.5);
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            user-select: none;
+            margin-top: 15px;
+        }
+
+        .checkbox-group input {
+            width: 20px;
+            height: 20px;
+            accent-color: #d4af37;
+            cursor: pointer;
+        }
+
+        .calc-btn {
+            background: #d4af37; 
+            color: #2d0b5a; 
+            border: none; 
+            width: 100%;
+            padding: 14px; 
+            font-weight: bold; 
+            border-radius: 6px; 
+            cursor: pointer; 
+            text-transform: uppercase;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            transition: background 0.2s, transform 0.1s;
+            margin-top: 10px;
+        }
+        .calc-btn:hover {
+            background: #f1c40f;
+        }
+        .calc-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Results Layout */
+        .results-box {
+            margin-top: 25px;
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            padding-top: 20px;
+        }
+
+        .result-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 1.1rem;
+        }
+        .result-row:last-of-type {
+            border-bottom: none;
+            margin-top: 5px;
+            background: rgba(212, 175, 55, 0.1);
+            padding: 12px 10px;
+            border-radius: 6px;
+            font-weight: bold;
+        }
+
+        .result-label { opacity: 0.9; }
+        .result-value { color: #d4af37; font-weight: bold; }
+        .result-row:last-of-type .result-value { color: #fff; font-size: 1.2rem; }
+
+        /* Fixed Scroll to Top Button Style */
+        .scroll-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #d4af37;
+            color: #2d0b5a;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            opacity: 0; 
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s, transform 0.2s;
+            z-index: 1000;
+        }
+        .scroll-btn.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        .scroll-btn:hover {
+            background: #fff;
+            transform: scale(1.1);
+        }
+
+        .back-link { 
+            display: inline-block; 
+            margin-top: 30px; 
+            color: #d4af37; 
+            text-decoration: none; 
+            font-weight: bold; 
+            text-transform: uppercase;
+        }
+        
+        footer { 
+            background: #1a1a1a; 
+            color: #aaa; 
+            padding: 25px; 
+            font-size: 0.85rem; 
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html" class="logo-text">HOUSE OF JUDAH</a>
+    </nav>
+
+    <div class="container">
+        <h1>Tithe Calculator</h1>
+        
+        <div class="calculator-card">
+            <div class="form-group">
+                <label for="totalAmount">Total Amount Received ($)</label>
+                <input type="number" id="totalAmount" class="calc-input" placeholder="Enter income amount" min="0" step="0.01">
+            </div>
+
+            <div class="form-group">
+                <label class="checkbox-group">
+                    <input type="checkbox" id="includeThirdTithe" onchange="calculateTithes()">
+                    <span>Include Third Tithe / Savings?</span>
+                </label>
+            </div>
+            
+            <button onclick="calculateTithes()" class="calc-btn">Calculate</button>
+
+            <div class="results-box">
+                <div class="result-row">
+                    <span class="result-label">First Tithe (10%):</span>
+                    <span id="firstTithe" class="result-value">$0.00</span>
+                </div>
+                <div class="result-row">
+                    <span class="result-label">Second Tithe (10%):</span>
+                    <span id="secondTithe" class="result-value">$0.00</span>
+                </div>
+                <div class="result-row" id="thirdTitheRow" style="display: none;">
+                    <span class="result-label">Third Tithe (10%):</span>
+                    <span id="thirdTithe" class="result-value">$0.00</span>
+                </div>
+                <div class="result-row">
+                    <span class="result-label">You Keep:</span>
+                    <span id="remainingAmount" class="result-value">$0.00</span>
+                </div>
+            </div>
+        </div>
+
+        <a href="https://dharmajifamily.github.io/Tithe-tester/" class="back-link">← Reset App</a>
+    </div>
+
+    <button id="scrollToTopBtn" class="scroll-btn" onclick="scrollToTop()">↑</button>
+
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('sw.js')
+            .then(reg => console.log('PWA Service Worker running.', reg))
+            .catch(err => console.log('Service Worker error:', err));
+        });
+      }
+    </script>
+
+    <footer>
+        2026 House of Judah
+    </footer>
+
+    <script>
+        // --- Tithe Calculation Engine ---
+        function calculateTithes() {
+            const totalInput = document.getElementById('totalAmount').value;
+            const total = parseFloat(totalInput);
+            
+            if (isNaN(total) || total < 0) {
+                document.getElementById('firstTithe').innerText = "$0.00";
+                document.getElementById('secondTithe').innerText = "$0.00";
+                document.getElementById('thirdTithe').innerText = "$0.00";
+                document.getElementById('remainingAmount').innerText = "$0.00";
+                return;
+            }
+
+            const firstTithe = total * 0.10;
+            const secondTithe = total * 0.10;
+            let thirdTithe = 0;
+            
+            const showThird = document.getElementById('includeThirdTithe').checked;
+            const thirdRow = document.getElementById('thirdTitheRow');
+
+            if (showThird) {
+                thirdTithe = total * 0.10;
+                thirdRow.style.display = "flex";
+            } else {
+                thirdRow.style.display = "none";
+            }
+
+            const remaining = total - (firstTithe + secondTithe + thirdTithe);
+
+            document.getElementById('firstTithe').innerText = formatCurrency(firstTithe);
+            document.getElementById('secondTithe').innerText = formatCurrency(secondTithe);
+            document.getElementById('thirdTithe').innerText = formatCurrency(thirdTithe);
+            document.getElementById('remainingAmount').innerText = formatCurrency(remaining);
+        }
+
+        function formatCurrency(amount) {
+            return "$" + amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+        }
+
+        // --- Scroll to Top Logic ---
+        const topBtn = document.getElementById("scrollToTopBtn");
+        window.onscroll = function() {
+            if (document.body.scrollTop > 150 || document.documentElement.scrollTop > 150) {
+                topBtn.classList.add("show");
+            } else {
+                topBtn.classList.remove("show");
+            }
+        };
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+    </script>
+
+</body>
+</html>
 
         /* Container to put text on left and checkbox on right */
         .checkbox-row { 
