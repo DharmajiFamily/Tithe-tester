@@ -1,16 +1,16 @@
 {
+  "short_name": "Tithe Calc",
   "name": "Tithe Calculator",
-  "short_name": "Tithe Calculator",
-  "start_url": "/Tithe-tester/",
-  "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#000000",
-  "orientation": "portrait",
   "icons": [
     {
-      "src": "1779836886275.png",
-      "sizes": "512x512",
-      "type": "image/png"
+      "src": "1000034613.jpg",
+      "type": "image/jpeg",
+      "sizes": "512x512"
     }
-  ]
+  ],
+  "start_url": "index.html",
+  "background_color": "#2d0b5a",
+  "theme_color": "#2d0b5a",
+  "display": "standalone",
+  "orientation": "portrait"
 }
