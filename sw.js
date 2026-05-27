@@ -1,8 +1,10 @@
-const CACHE_NAME = 'tithe-cache-v1';
+const CACHE_NAME = 'tithe-calc-v1';
 const ASSETS = [
-  '/Tithe-tester/',
-  '/Tithe-tester/];
+  'index.html',
+  '1000034613.jpg'
+];
 
+// Install Service Worker and cache the files
 self.addEventListener('install', (e) => {
   e.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
@@ -11,6 +13,7 @@ self.addEventListener('install', (e) => {
   );
 });
 
+// Cache and return requests
 self.addEventListener('fetch', (e) => {
   e.respondWith(
     caches.match(e.request).then((response) => {
