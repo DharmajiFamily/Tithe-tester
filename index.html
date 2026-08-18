@@ -1,7 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tithe Tester</title>
+    
+    <!-- Link to Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#000000">
+
     <style>
         body { font-family: sans-serif; text-align: center; background-color: #f0f2f5; padding: 20px; }
         .container { background: white; padding: 30px; border-radius: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); max-width: 350px; margin: auto; }
@@ -10,11 +17,6 @@
         #output { margin-top: 20px; text-align: left; line-height: 1.6; border-top: 1px solid #eee; padding-top: 15px; display: none; }
         .green { color: #28a745; font-weight: bold; font-size: 1.2em; }
     </style>
-    <!-- Link to Manifest -->
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#000000">
-
-
 </head>
 <body>
 
@@ -64,14 +66,14 @@ function calculate() {
     document.getElementById('output').style.display = "block";
 }
 </script>
+
 <script>
   if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('sw.js');
-    });
+    navigator.serviceWorker.register('sw.js')
+      .then(() => console.log('App ready to install!'))
+      .catch((err) => console.log('Error', err));
   }
 </script>
-
 
 </body>
 </html>
