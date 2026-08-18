@@ -3,5 +3,17 @@
   "theme_color": "#000000",
   "background_color": "#000000",
   "short_name": "Tithe tester",
-  "id": "Tithetestapp"
+  "id": "Tithetestapp",
+  "icons": [
+    {
+      "src": "/icon.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/icon.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ]
 }
