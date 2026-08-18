@@ -4,14 +4,15 @@
   "background_color": "#000000",
   "short_name": "Tithe tester",
   "id": "Tithetestapp",
+  "start_url": "./index.html",
   "icons": [
     {
-      "src": "/1779836886275.png",
+      "src": "1779836886275.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "/1779836886275.png",
+      "src": "1779836886275.png",
       "type": "image/png",
       "sizes": "512x512"
     }
